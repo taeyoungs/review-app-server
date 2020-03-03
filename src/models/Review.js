@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const Review = new mongoose.Schema({
+const ReviewSchema = new mongoose.Schema({
   movieId: {
     type: Number,
     required: 'Movie id is required',
@@ -22,3 +22,7 @@ const Review = new mongoose.Schema({
     required: 'Content is required',
   },
 });
+
+const model = mongoose.model('Review', ReviewSchema);
+
+export default model;

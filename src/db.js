@@ -1,7 +1,18 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-mongoose
-  .connect('mongodb://127.0.0.1:27017/cinema', { useNewUrlParser: true })
-  .catch(e => {
-    console.error('Connection error', e.message);
-  });
+dotenv.config();
+
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+
+const handleOpen = () => console.log('MongoDB Connect');
+const handleError = error => console.log(`Error on DB: ${error}`);
+
+db.once('open', handleOpen);
+db.on('error', handleError);

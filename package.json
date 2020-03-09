@@ -18,7 +18,9 @@
     "helmet": "^3.21.3",
     "mongoose": "^5.9.3",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "passport": "^0.4.1",
+    "passport-local-mongoose": "^6.0.1"
   },
   "scripts": {
     "server": "nodemon --exec babel-node src/init.js --delay 2"

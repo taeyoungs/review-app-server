@@ -1,8 +1,11 @@
-// global
+// auth
 
-const JOIN = '/join';
-const LOGIN = '/login';
+const AUTH = '/auth';
+const JOIN = '/join/local';
+const LOGIN = '/login/local';
 const LOGOUT = '/logout';
+const EXISTS = '/exists/:key(email|username)/:value';
+const CHECK = '/check';
 
 // review
 const REVIEWS = '/api/reviews';
@@ -19,9 +22,12 @@ const CHANGE_PASSWORD = '/change-password';
 const API = '/api';
 
 const routes = {
+  auth: AUTH,
   join: JOIN,
   login: LOGIN,
   logout: LOGOUT,
+  exists: EXISTS,
+  check: CHECK,
   users: USERS,
   userDetail: id => {
     if (id) {

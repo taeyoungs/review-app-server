@@ -5,6 +5,6 @@ import { jwtMiddleware } from '../lib/token';
 
 const apiRouter = express.Router();
 
-apiRouter.use(routes.auth, jwtMiddleware, authRouter);
+apiRouter.use(routes.auth, authRouter);
 
 export default apiRouter;

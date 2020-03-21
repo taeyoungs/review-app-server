@@ -1,6 +1,8 @@
+const HOME = '/';
+
 // auth
 
-const AUTH = '/auth';
+const AUTH = '/api/auth';
 const JOIN = '/join/local';
 const LOGIN = '/login/local';
 const LOGOUT = '/logout';
@@ -22,6 +24,7 @@ const CHANGE_PASSWORD = '/change-password';
 const API = '/api';
 
 const routes = {
+  home: HOME,
   auth: AUTH,
   join: JOIN,
   login: LOGIN,

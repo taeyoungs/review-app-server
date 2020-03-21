@@ -1,15 +1,17 @@
 import mongoose from 'mongoose';
-import passportLocalMongoose from 'passport-local-mongoose';
 import crypto from 'crypto';
+import passportLocalMongoose from 'passport-local-mongoose';
 import { generateToken } from '../lib/token';
 
-const hash = password =>
-  crypto
+const hash = password => {
+  console.log(password);
+  return crypto
     .createHmac('sha256', process.env.SECRET_KEY)
     .update(password)
     .digest('hex');
+};
 
-const UserSchema = new mongoose.Schema({
+const User = new mongoose.Schema({
   profile: {
     username: String,
     thumnail: { type: String, default: 'images/default_thumnail.png' },
@@ -18,6 +20,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: 'Email is required',
   },
+  password: String,
   social: {
     naver: {
       id: String,
@@ -41,50 +44,51 @@ const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-UserSchema.statics.findByUsername = function(username) {
-  return this.findOne({ 'profile.usename': username }).exec();
+User.statics.findByUsername = function(username) {
+  return this.findOne({ 'profile.username': username }).exec();
 };
 
-UserSchema.statics.findByEmail = function(email) {
+User.statics.findByEmail = function(email) {
   return this.findOne({ email }).exec();
 };
 
-UserSchema.statics.findByEmailOrUsername = function({ username, email }) {
+User.statics.findByEmailOrUsername = function({ username, email }) {
   return this.findOne({
     $or: [{ 'profile.username': username }, { email }],
   }).exec();
 };
 
-// UserSchema.statics.localRegister = ({ username, email, password }) => {
+// User.statics.localRegister = ({ username, email, password }) => {
+//   console.log(hash(password));
 //   const user = new this({
 //     profile: {
 //       username,
 //     },
 //     email,
-//     password: hash(passowrd),
+//     password: hash(password),
 //   });
 
 //   return user.save();
 // };
 
-UserSchema.methods.validatePassword = password => {
-  const hashed = hash(password);
+// User.methods.validatePassword = password => {
+//   const hashed = hash(password);
 
-  return this.password === hashed;
-};
+//   return this.password === hashed;
+// };
 
-UserSchema.methods.generateToken = function() {
-  // jwt에 담을 내용
-  const payload = {
-    _id: this._id,
-    profile: this.profile,
-  };
+// User.methods.generateToken = function() {
+//   // jwt에 담을 내용
+//   const payload = {
+//     _id: this._id,
+//     profile: this.profile,
+//   };
 
-  return generateToken(payload, 'User');
-};
+//   return generateToken(payload, 'user');
+// };
 
-UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
+User.plugin(passportLocalMongoose, { usernameField: 'email' });
 
-const model = mongoose.model('User', UserSchema);
+const model = mongoose.model('User', User);
 
 export default model;

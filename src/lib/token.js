@@ -25,6 +25,7 @@ const decodeToken = token => {
 
 export const jwtMiddleware = async (req, res, next) => {
   const token = req.cookies.access_token;
+  console.log('token: ', token);
 
   if (!token) return next();
 
@@ -40,7 +41,9 @@ export const jwtMiddleware = async (req, res, next) => {
       });
     }
 
+    console.log('decoded: ', decoded);
     req.user = decoded;
+    console.log('res.user: ', res.user);
   } catch (error) {
     console.log(error);
     req.user = null;

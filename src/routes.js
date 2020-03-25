@@ -8,6 +8,7 @@ const LOGIN = '/login/local';
 const LOGOUT = '/logout';
 const EXISTS = '/exists/:key(email|username)/:value';
 const CHECK = '/check';
+const TEMPPWCHANGE = '/tempPwChange';
 
 // review
 const REVIEWS = '/api/reviews';
@@ -31,6 +32,7 @@ const routes = {
   logout: LOGOUT,
   exists: EXISTS,
   check: CHECK,
+  tempPwChange: TEMPPWCHANGE,
   users: USERS,
   userDetail: id => {
     if (id) {

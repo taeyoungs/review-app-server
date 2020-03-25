@@ -1,5 +1,7 @@
 import passport from 'passport';
 import User from '../../models/User';
+import nodemailer from 'nodemailer';
+import { randomString } from '../../lib/func';
 
 export const joinLocal = async (req, res, next) => {
   const {
@@ -74,6 +76,7 @@ export const testLogin = (req, res) => {
     console.log(req.user);
     console.log(req.session);
     return res.status(200).json({
+      id: req.user._id,
       profile: req.user.profile,
     });
   } else {
@@ -121,35 +124,29 @@ export const localLogin = async (req, res) => {
   console.log(req.session);
 
   return res.status(200).json({
+    id: req.user._id,
     profile: req.user.profile,
   });
 
-  // req.session.save(() => {
-  //   if (req.user) {
-  //     return res.status(200).json({
-  //       user: {
-  //         id: req.user._id,
-  //         profile: req.user.profile,
-  //       },
-  //     });
-  //   } else {
-  //     return res.status(400).json({
-  //       error: 'userInfo doesnt exists',
-  //     });
-  //   }
-  // });
+  // if (req.user) {
+  //   return res.status(200).json({
+  //     user: {
+  //       id: req.user._id,
+  //       profile: req.user.profile,
+  //     },
+  //   });
+  // } else {
+  //   return res.status(401).json({
+  //     msg: '사용자 정보가 일치하지 않습니다.',
+  //   });
+  // }
 };
 
 export const exists = async (req, res) => {
-  //   console.log(req);
   const {
     params: { key, value },
   } = req;
   console.log(key, value);
-  // console.log('user: ', req.user);
-
-  // const test = await User.findOne({ 'profile.username': value });
-  // console.log(test);
 
   let user = null;
   try {
@@ -185,6 +182,7 @@ export const check = async (req, res) => {
     console.log('/user ' + JSON.stringify(req.session.passport.user));
 
     return res.status(200).json({
+      id: user._id,
       profile: user.profile,
     });
   } else {
@@ -192,15 +190,58 @@ export const check = async (req, res) => {
 
     return res.json({ uInfo: 'undefined' });
   }
+};
 
-  // if (!user) {
-  //   // Forbidden
-  //   return res.status(403).json({
-  //     error: 'user forbidden',
-  //   });
-  // }
+export const tempPwChange = async (req, res) => {
+  const {
+    body: { email },
+  } = req;
 
-  // return res.status(200).json({
-  //   profile: user.profile,
-  // });
+  const user = await User.findByEmail(email);
+
+  if (!user) {
+    return res.status(404).json({
+      msg: 'Not Found User',
+    });
+  }
+
+  const randomStr = randomString();
+
+  try {
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'xoxodudwkd@gmail.com', // gmail 계정 아이디를 입력
+        pass: 'xodud9411', // gmail 계정의 비밀번호를 입력
+      },
+    });
+
+    let mailOptions = {
+      from: 'xoxodudwkd@gmail.com', // 발송 메일 주소 (위에서 작성한 gmail 계정 아이디)
+      to: email, // 수신 메일 주소
+      subject: 'ReviewApp 임시 비밀번호입니다.', // 제목
+      text: `임시 비밀번호 : ${randomStr} <br /> 임시 비밀번호로 로그인 하신 후 꼭 비밀번호를 재설정해주세요.`, // 내용
+    };
+
+    transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  try {
+    await user.setPassword(randomStr);
+    await user.save();
+
+    return res.status(200).json({
+      msg: 'Success to change password',
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

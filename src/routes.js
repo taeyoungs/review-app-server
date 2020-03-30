@@ -12,9 +12,11 @@ const TEMPPWCHANGE = '/tempPwChange';
 
 // review
 const REVIEWS = '/api/reviews';
+const LIST = '/list';
 const UPLOAD = '/upload';
 const REVIEW_DETAIL = '/:id';
 const EDIT_REVIEW = '/edit-review';
+const DELETE_REVIEW = '/:id/delete';
 
 // user
 const USERS = '/api/users';
@@ -44,13 +46,10 @@ const routes = {
   changePassword: CHANGE_PASSWORD,
   reviews: REVIEWS,
   upload: UPLOAD,
-  reviewDetail: id => {
-    if (id) {
-      return `/reviews/${id}`;
-    }
-    return REVIEW_DETAIL;
-  },
+  reviewDetail: REVIEW_DETAIL,
+  deleteReview: DELETE_REVIEW,
   editReview: EDIT_REVIEW,
+  list: LIST,
   api: API,
 };
 

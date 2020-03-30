@@ -37,6 +37,12 @@ const User = new mongoose.Schema({
       ref: 'Review',
     },
   ],
+  reviewList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Review',
+    },
+  ],
   reviewScore: {
     type: Number,
     default: 0,

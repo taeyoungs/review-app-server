@@ -5,9 +5,17 @@ const ReviewSchema = new mongoose.Schema({
     type: Number,
     required: 'Movie id is required',
   },
-  condition: {
+  emotion: {
     type: Number,
-    required: 'Condition is required',
+    required: 'Emotion is required',
+  },
+  star: {
+    type: Number,
+    required: 'Rating is required',
+  },
+  title: {
+    type: String,
+    required: 'Title is required',
   },
   views: {
     type: Number,
@@ -21,6 +29,14 @@ const ReviewSchema = new mongoose.Schema({
     type: String,
     required: 'Content is required',
   },
+  spoiled: Boolean,
+  comment: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
+    },
+  ],
+  createdAt: { type: Date, default: Date.now },
 });
 
 const model = mongoose.model('Review', ReviewSchema);

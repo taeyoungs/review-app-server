@@ -17,6 +17,7 @@ const UPLOAD = '/upload';
 const REVIEW_DETAIL = '/:id';
 const EDIT_REVIEW = '/edit-review';
 const DELETE_REVIEW = '/:id/delete';
+const MOVIE_REVIEW_LIST = '/movie/:id';
 
 // user
 const USERS = '/api/users';
@@ -49,6 +50,7 @@ const routes = {
   reviewDetail: REVIEW_DETAIL,
   deleteReview: DELETE_REVIEW,
   editReview: EDIT_REVIEW,
+  movieReviewList: MOVIE_REVIEW_LIST,
   list: LIST,
   api: API,
 };

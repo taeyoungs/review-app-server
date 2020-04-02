@@ -1,9 +1,20 @@
 import mongoose from 'mongoose';
 
 const ReviewSchema = new mongoose.Schema({
-  movieId: {
-    type: Number,
-    required: 'Movie id is required',
+  movie: {
+    movieId: {
+      type: Number,
+      required: 'Movie id is required',
+    },
+    poster: {
+      type: String,
+    },
+    genres: {
+      type: Array,
+    },
+    movieTitle: {
+      type: String,
+    },
   },
   emotion: {
     type: Number,
@@ -37,6 +48,7 @@ const ReviewSchema = new mongoose.Schema({
     },
   ],
   createdAt: { type: Date, default: Date.now },
+  formatCreatedAt: String,
 });
 
 const model = mongoose.model('Review', ReviewSchema);

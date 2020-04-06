@@ -95,7 +95,7 @@ export const getMovieReviewList = async (req, res) => {
     const reviews = await Review.find({}).populate('user');
 
     const movieReviews = reviews.filter(
-      review => String(review.movie.movieId) === id,
+      (review) => String(review.movie.movieId) === id,
     );
 
     return res.status(200).json({
@@ -125,6 +125,57 @@ export const editReview = async (req, res) => {
 
     return res.status(200).json({
       reviewId: id,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 1. 로그인한 유저 likeReview array에 push 후 save
+// 2. review에 views++
+export const likeReview = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+
+  try {
+    await Review.findById(id, (err, doc) => {
+      if (err) console.log(err);
+      doc.views += 1;
+      doc.save();
+    });
+    req.user.likeReview.push(id);
+    req.user.save();
+    return res.status(200).json({
+      likeReview: req.user.likeReview,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const dislikeReview = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+
+  try {
+    await Review.findById(id, (err, doc) => {
+      if (err) console.log(err);
+      if (doc.views === 0) {
+        doc.views = 0;
+      } else {
+        doc.views -= 1;
+      }
+      doc.save();
+    });
+
+    req.user.likeReview = req.user.likeReview.filter(
+      (reviewId) => id !== String(reviewId),
+    );
+    req.user.save();
+    return res.status(200).json({
+      likeReview: req.user.likeReview,
     });
   } catch (error) {
     console.log(error);

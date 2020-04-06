@@ -78,6 +78,7 @@ export const testLogin = (req, res) => {
     return res.status(200).json({
       id: req.user._id,
       profile: req.user.profile,
+      likeReview: req.user.likeReview,
     });
   } else {
     return res.status(404);
@@ -126,6 +127,7 @@ export const localLogin = async (req, res) => {
   return res.status(200).json({
     id: req.user._id,
     profile: req.user.profile,
+    likeReview: req.user.likeReview,
   });
 
   // if (req.user) {
@@ -184,6 +186,7 @@ export const check = async (req, res) => {
     return res.status(200).json({
       id: user._id,
       profile: user.profile,
+      likeReview: req.user.likeReview,
     });
   } else {
     console.log('/user undefined');
@@ -223,7 +226,7 @@ export const tempPwChange = async (req, res) => {
       text: `임시 비밀번호 : ${randomStr} <br /> 임시 비밀번호로 로그인 하신 후 꼭 비밀번호를 재설정해주세요.`, // 내용
     };
 
-    transporter.sendMail(mailOptions, function(error, info) {
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {

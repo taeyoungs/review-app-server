@@ -7,6 +7,8 @@ import {
   deleteReview,
   getMovieReviewList,
   editReview,
+  likeReview,
+  dislikeReview,
 } from '../controllers/reviewController';
 
 const reviewRouter = express.Router();
@@ -25,5 +27,9 @@ reviewRouter.get(routes.deleteReview, deleteReview);
 reviewRouter.get(routes.movieReviewList, getMovieReviewList);
 
 reviewRouter.post(routes.editReview, editReview);
+
+reviewRouter.post(routes.likeReview, likeReview);
+
+reviewRouter.post(routes.dislikeReview, dislikeReview);
 
 export default reviewRouter;

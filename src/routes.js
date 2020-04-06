@@ -18,6 +18,8 @@ const REVIEW_DETAIL = '/:id';
 const EDIT_REVIEW = '/edit-review';
 const DELETE_REVIEW = '/:id/delete';
 const MOVIE_REVIEW_LIST = '/movie/:id';
+const LIKE_REVIEW = '/:id/like-review';
+const DISLIKE_REVIEW = '/:id/dislike-review';
 
 // user
 const USERS = '/api/users';
@@ -37,7 +39,7 @@ const routes = {
   check: CHECK,
   tempPwChange: TEMPPWCHANGE,
   users: USERS,
-  userDetail: id => {
+  userDetail: (id) => {
     if (id) {
       return `/users/${id}`;
     }
@@ -51,6 +53,8 @@ const routes = {
   deleteReview: DELETE_REVIEW,
   editReview: EDIT_REVIEW,
   movieReviewList: MOVIE_REVIEW_LIST,
+  likeReview: LIKE_REVIEW,
+  dislikeReview: DISLIKE_REVIEW,
   list: LIST,
   api: API,
 };

@@ -14,8 +14,6 @@ import {
 const reviewRouter = express.Router();
 
 // insert, delete, update
-
-// insert
 reviewRouter.post(routes.upload, insertReview);
 
 reviewRouter.get(routes.list, getReviewList);

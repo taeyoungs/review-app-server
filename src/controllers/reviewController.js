@@ -2,7 +2,7 @@ import Review from '../models/Review';
 import dateFormat from '../lib/dateFormat';
 
 export const insertReview = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const {
     body: { emotion, title, content, star, movie, spoiled },
@@ -36,12 +36,21 @@ export const insertReview = async (req, res) => {
 };
 
 export const getReviewList = async (req, res) => {
-  try {
-    const reviews = await Review.find({})
-      .populate('user')
-      .sort({ createdAt: 'desc' });
+  const {
+    params: { key },
+  } = req;
 
-    console.log(reviews);
+  try {
+    let reviews = [];
+    if (key === 'recent') {
+      reviews = await Review.find({})
+        .populate('user')
+        .sort({ createdAt: 'desc' });
+    } else {
+      reviews = await Review.find({}).populate('user').sort({ views: 'desc' });
+    }
+
+    // console.log(reviews);
     return res.status(200).json({
       reviews,
     });
@@ -57,7 +66,7 @@ export const getReview = async (req, res) => {
 
   try {
     const review = await Review.findById(id).populate('user');
-    console.log(review);
+    // console.log(review);
 
     return res.status(200).json({
       review,

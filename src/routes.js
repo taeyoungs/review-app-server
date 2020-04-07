@@ -12,7 +12,7 @@ const TEMPPWCHANGE = '/tempPwChange';
 
 // review
 const REVIEWS = '/api/reviews';
-const LIST = '/list';
+const LIST = '/:key/list';
 const UPLOAD = '/upload';
 const REVIEW_DETAIL = '/:id';
 const EDIT_REVIEW = '/edit-review';
@@ -26,6 +26,13 @@ const USERS = '/api/users';
 const USER_DETAIL = '/:id';
 const EDIT_PROFILE = '/edit-profile';
 const CHANGE_PASSWORD = '/change-password';
+
+// comment
+const COMMENTS = '/api/comments';
+const CREATE_COMMENT = '/create';
+const REVIEW_COMMENTS = '/:id';
+const DELETE_COMMENT = '/delete';
+const UPDATE_COMMENT = '/update';
 
 const API = '/api';
 
@@ -55,6 +62,11 @@ const routes = {
   movieReviewList: MOVIE_REVIEW_LIST,
   likeReview: LIKE_REVIEW,
   dislikeReview: DISLIKE_REVIEW,
+  comments: COMMENTS,
+  reviewComments: REVIEW_COMMENTS,
+  deleteComment: DELETE_COMMENT,
+  updateComment: UPDATE_COMMENT,
+  createComment: CREATE_COMMENT,
   list: LIST,
   api: API,
 };

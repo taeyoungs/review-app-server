@@ -9,6 +9,7 @@ const LOGOUT = '/logout';
 const EXISTS = '/exists/:key(email|username)/:value';
 const CHECK = '/check';
 const TEMPPWCHANGE = '/tempPwChange';
+const CHECK_PASSWORD = '/checkPassword';
 
 // review
 const REVIEWS = '/api/reviews';
@@ -45,13 +46,9 @@ const routes = {
   exists: EXISTS,
   check: CHECK,
   tempPwChange: TEMPPWCHANGE,
+  checkPassword: CHECK_PASSWORD,
   users: USERS,
-  userDetail: (id) => {
-    if (id) {
-      return `/users/${id}`;
-    }
-    return USER_DETAIL;
-  },
+  userDetail: USER_DETAIL,
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
   reviews: REVIEWS,

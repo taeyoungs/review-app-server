@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import passportLocalMongoose from 'passport-local-mongoose';
 import { generateToken } from '../lib/token';
 
-const hash = password => {
+const hash = (password) => {
   console.log(password);
   return crypto
     .createHmac('sha256', process.env.SECRET_KEY)
@@ -15,12 +15,12 @@ const User = new mongoose.Schema({
   profile: {
     username: String,
     thumnail: { type: String, default: 'default' },
+    about: String,
   },
   email: {
     type: String,
     required: 'Email is required',
   },
-  password: String,
   social: {
     naver: {
       id: String,
@@ -50,15 +50,15 @@ const User = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-User.statics.findByUsername = function(username) {
+User.statics.findByUsername = function (username) {
   return this.findOne({ 'profile.username': username }).exec();
 };
 
-User.statics.findByEmail = function(email) {
+User.statics.findByEmail = function (email) {
   return this.findOne({ email }).exec();
 };
 
-User.statics.findByEmailOrUsername = function({ username, email }) {
+User.statics.findByEmailOrUsername = function ({ username, email }) {
   return this.findOne({
     $or: [{ 'profile.username': username }, { email }],
   }).exec();

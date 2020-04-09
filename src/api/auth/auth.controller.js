@@ -35,6 +35,7 @@ export const joinLocal = async (req, res, next) => {
     user = await User({
       profile: {
         username,
+        about: `안녕하세요. ${username}입니다.`,
       },
       email,
     });
@@ -243,6 +244,29 @@ export const tempPwChange = async (req, res) => {
 
     return res.status(200).json({
       msg: 'Success to change password',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const checkPassword = async (req, res) => {
+  const {
+    body: { password },
+  } = req;
+
+  try {
+    await req.user.authenticate(password, (err, doc) => {
+      if (err) console.log(err);
+      if (doc) {
+        return res.status(200).json({
+          msg: 'Success to authenticate',
+        });
+      } else {
+        return res.status(400).json({
+          msg: 'Fail to authenticate',
+        });
+      }
     });
   } catch (error) {
     console.log(error);

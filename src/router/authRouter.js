@@ -11,6 +11,7 @@ import {
   getUser,
   testLogin,
   tempPwChange,
+  checkPassword,
 } from '../api/auth/auth.controller';
 import { localMiddleware } from '../middleware';
 
@@ -33,5 +34,7 @@ authRouter.get(routes.exists, exists);
 authRouter.get(routes.check, check);
 
 authRouter.post(routes.tempPwChange, tempPwChange);
+
+authRouter.post(routes.checkPassword, checkPassword);
 
 export default authRouter;

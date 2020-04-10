@@ -65,3 +65,29 @@ export const editUserProfile = async (req, res) => {
     console.log(error);
   }
 };
+
+export const editUserThumbnail = async (req, res) => {
+  const {
+    body: { id },
+    file,
+  } = req;
+
+  // s3에 먼저 이미지가 정상적으로 올라가는지부터 확인
+  try {
+    await User.findById(id, (err, doc) => {
+      if (err) console.log(err);
+      doc.profile.thumbnail = file ? file.location : req.user.profile.thumbnail;
+      doc.profile.thumbnailKey = file.key;
+      doc.save();
+    });
+    return res.status(200).json({
+      location: file.location,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const testThumbnail = (req, res) => {
+  console.log(req.body);
+};

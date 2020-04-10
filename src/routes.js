@@ -27,6 +27,7 @@ const USERS = '/api/users';
 const USER_DETAIL = '/:id';
 const EDIT_PROFILE = '/edit-profile';
 const CHANGE_PASSWORD = '/change-password';
+const UPLOAD_THUMBNAIL = '/upload/thumbnail';
 
 // comment
 const COMMENTS = '/api/comments';
@@ -51,6 +52,7 @@ const routes = {
   userDetail: USER_DETAIL,
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
+  uploadThumbnail: UPLOAD_THUMBNAIL,
   reviews: REVIEWS,
   upload: UPLOAD,
   reviewDetail: REVIEW_DETAIL,

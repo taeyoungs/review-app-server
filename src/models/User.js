@@ -14,8 +14,9 @@ const hash = (password) => {
 const User = new mongoose.Schema({
   profile: {
     username: String,
-    thumnail: { type: String, default: 'default' },
+    thumbnail: { type: String, default: 'default' },
     about: String,
+    thumbnailKey: String,
   },
   email: {
     type: String,

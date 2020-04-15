@@ -38,6 +38,16 @@ const UPDATE_COMMENT = '/update';
 
 const API = '/api';
 
+// Naver
+const NAVER_LOGIN = '/naver';
+const NAVER_LOGIN_CALLBACK = '/naver/callback';
+
+// Kakao
+// const KAKAO_LOGIN = '/kakao'
+
+// Google
+const GOOGLE_LOGIN = '/google';
+
 const routes = {
   home: HOME,
   auth: AUTH,
@@ -68,6 +78,9 @@ const routes = {
   createComment: CREATE_COMMENT,
   list: LIST,
   api: API,
+  naverLogin: NAVER_LOGIN,
+  naverLoginCallback: NAVER_LOGIN_CALLBACK,
+  googleLogin: GOOGLE_LOGIN,
 };
 
 export default routes;

@@ -63,7 +63,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use('/api/auth/exists/:key(email|username)/:value', test);
 app.use(routes.home, apiRouter);
 
 export default app;

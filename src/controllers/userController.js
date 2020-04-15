@@ -1,5 +1,7 @@
 import passport from 'passport';
 import User from '../models/User';
+import Axios from 'axios';
+import { OAuth2Client } from 'google-auth-library';
 
 export const changePassword = async (req, res) => {
   const {
@@ -88,6 +90,82 @@ export const editUserThumbnail = async (req, res) => {
   }
 };
 
-export const testThumbnail = (req, res) => {
-  console.log(req.body);
+export const googleLogin = async (req, res, next) => {
+  const {
+    body: { tokenId },
+  } = req;
+
+  // tokenId
+  // console.log(tokenId);
+
+  const client_id =
+    '1060200703755-6mdo0b79pdmguq22l2st0ad91csqjbis.apps.googleusercontent.com';
+
+  const client = new OAuth2Client(client_id);
+
+  let result = {};
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: tokenId,
+      audience: client_id, // Specify the CLIENT_ID of the app that accesses the backend
+      // Or, if multiple clients access the backend:
+      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    });
+    result = ticket.getPayload();
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+
+  // const result = await verify(tokenId).catch(console.error);
+
+  // console.log(result['sub']);
+
+  // const result = await Axios.get(
+  //   'https://www.googleapis.com/oauth2/v3/tokeninfo',
+  //   {
+  //     params: {
+  //       id_token: tokenId,
+  //     },
+  //   },
+  // );
+  // console.log(result.data);
+
+  if (result.aud !== client_id) return res.status(400);
+
+  try {
+    console.log('!!!!!!!!!!!!!!!!!!!!');
+    const query = User.where({ email: result.email });
+    await query.findOne(async (err, user) => {
+      if (err) console.log(err);
+      if (user) {
+        // console.log(user);
+        user.social.google.id = result.sub;
+        user.save();
+        req.user = user;
+      } else {
+        const newUser = await User.create({
+          profile: {
+            username: result.name,
+            about: `안녕하세요. ${result.name}입니다.`,
+            thumbnail: result.picture,
+          },
+          email: result.email,
+          social: {
+            google: {
+              id: result.sub,
+            },
+          },
+        });
+        req.user = newUser;
+      }
+    });
+
+    req.session.passport.user = result.email;
+    req.session.save();
+  } catch (error) {
+    console.log(error);
+  }
+  next();
 };

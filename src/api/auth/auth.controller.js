@@ -82,7 +82,9 @@ export const testLogin = (req, res) => {
       likeReview: req.user.likeReview,
     });
   } else {
-    return res.status(404);
+    return res.status(404).json({
+      msg: 'failed to google login',
+    });
   }
 };
 

@@ -14,6 +14,7 @@ import {
   checkPassword,
 } from '../api/auth/auth.controller';
 import { localMiddleware } from '../middleware';
+import { googleLogin } from '../controllers/userController';
 
 const authRouter = express.Router();
 
@@ -36,5 +37,7 @@ authRouter.get(routes.check, check);
 authRouter.post(routes.tempPwChange, tempPwChange);
 
 authRouter.post(routes.checkPassword, checkPassword);
+
+authRouter.post(routes.googleLogin, googleLogin, testLogin);
 
 export default authRouter;

@@ -18,7 +18,10 @@ const multerUserThumbnail = multer({
 export const uploadUserThumbnail = multerUserThumbnail.single('thumbnail');
 
 export const deleteThumbnail = (req, res, next) => {
-  if (req.user.profile.thumbnail !== 'default') {
+  if (
+    req.user.profile.thumbnail !== 'default' &&
+    req.user.profile.thumbnailKey
+  ) {
     const params = {
       Bucket: 'youngs-wetube/userThumbnail',
       Key: req.user.profile.thumbnailKey,

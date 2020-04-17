@@ -6,7 +6,7 @@ import {
   getUserDetail,
   editUserProfile,
   editUserThumbnail,
-  testThumbnail,
+  dropOutUser,
 } from '../controllers/userController';
 import { uploadUserThumbnail, deleteThumbnail } from '../middleware';
 
@@ -24,6 +24,8 @@ userRouter.post(
   uploadUserThumbnail,
   editUserThumbnail,
 );
+
+userRouter.get(routes.dropOutUser, dropOutUser);
 
 // userRouter.post(routes.uploadThumbnail, testThumbnail);
 

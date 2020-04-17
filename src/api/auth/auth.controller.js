@@ -74,8 +74,8 @@ export const localAuth = passport.authenticate('local');
 
 export const testLogin = (req, res) => {
   if (req.user) {
-    console.log(req.user);
-    console.log(req.session);
+    // console.log(req.user);
+    // console.log(req.session);
     return res.status(200).json({
       id: req.user._id,
       profile: req.user.profile,

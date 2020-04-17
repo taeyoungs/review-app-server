@@ -28,6 +28,7 @@ const USER_DETAIL = '/:id';
 const EDIT_PROFILE = '/edit-profile';
 const CHANGE_PASSWORD = '/change-password';
 const UPLOAD_THUMBNAIL = '/upload/thumbnail';
+const DROPOUT_USER = '/dropOut/:id';
 
 // comment
 const COMMENTS = '/api/comments';
@@ -63,6 +64,7 @@ const routes = {
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
   uploadThumbnail: UPLOAD_THUMBNAIL,
+  dropOutUser: DROPOUT_USER,
   reviews: REVIEWS,
   upload: UPLOAD,
   reviewDetail: REVIEW_DETAIL,

@@ -1,6 +1,7 @@
 import passport from 'passport';
 import User from '../models/User';
-import Axios from 'axios';
+import Review from '../models/Review';
+import Comment from '../models/Comment';
 import { OAuth2Client } from 'google-auth-library';
 
 export const changePassword = async (req, res) => {
@@ -45,7 +46,7 @@ export const getUserDetail = async (req, res) => {
 
 export const editUserProfile = async (req, res) => {
   const {
-    body: { id, username, newP, password, about },
+    body: { id, username, newP, about },
   } = req;
 
   // console.log(req.body);
@@ -58,7 +59,7 @@ export const editUserProfile = async (req, res) => {
       doc.save();
     });
     if (newP !== '') {
-      await User.changePassword(password, newP, (err, doc) => {
+      await User.setPassword(newP, (err, doc) => {
         if (err) console.log(err);
       });
     }
@@ -95,9 +96,6 @@ export const googleLogin = async (req, res, next) => {
     body: { tokenId },
   } = req;
 
-  // tokenId
-  // console.log(tokenId);
-
   const client_id =
     '1060200703755-6mdo0b79pdmguq22l2st0ad91csqjbis.apps.googleusercontent.com';
 
@@ -108,34 +106,17 @@ export const googleLogin = async (req, res, next) => {
   try {
     const ticket = await client.verifyIdToken({
       idToken: tokenId,
-      audience: client_id, // Specify the CLIENT_ID of the app that accesses the backend
-      // Or, if multiple clients access the backend:
-      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+      audience: client_id,
     });
     result = ticket.getPayload();
-    console.log(result);
+    // console.log(result);
   } catch (error) {
     console.log(error);
   }
 
-  // const result = await verify(tokenId).catch(console.error);
-
-  // console.log(result['sub']);
-
-  // const result = await Axios.get(
-  //   'https://www.googleapis.com/oauth2/v3/tokeninfo',
-  //   {
-  //     params: {
-  //       id_token: tokenId,
-  //     },
-  //   },
-  // );
-  // console.log(result.data);
-
   if (result.aud !== client_id) return res.status(400);
 
   try {
-    console.log('!!!!!!!!!!!!!!!!!!!!');
     const query = User.where({ email: result.email });
     await query.findOne(async (err, user) => {
       if (err) console.log(err);
@@ -168,4 +149,32 @@ export const googleLogin = async (req, res, next) => {
     console.log(error);
   }
   next();
+};
+
+export const dropOutUser = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+
+  console.log(`id: ${id}`);
+
+  try {
+    // 로그아웃
+    req.logout();
+
+    // User Review 삭제
+    await Review.deleteMany({ user: id });
+
+    // User Comment 삭제
+    await Comment.deleteMany({ user: id });
+
+    // User 삭제
+    await User.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      msg: 'Success to dropout',
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

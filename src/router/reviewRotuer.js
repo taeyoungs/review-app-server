@@ -9,6 +9,7 @@ import {
   editReview,
   likeReview,
   dislikeReview,
+  getReviewPaging,
 } from '../controllers/reviewController';
 
 const reviewRouter = express.Router();
@@ -29,5 +30,7 @@ reviewRouter.post(routes.editReview, editReview);
 reviewRouter.post(routes.likeReview, likeReview);
 
 reviewRouter.post(routes.dislikeReview, dislikeReview);
+
+reviewRouter.post(routes.reviewPaging, getReviewPaging);
 
 export default reviewRouter;

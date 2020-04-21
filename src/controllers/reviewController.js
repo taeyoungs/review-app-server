@@ -1,4 +1,5 @@
 import Review from '../models/Review';
+import User from '../models/User';
 import dateFormat from '../lib/dateFormat';
 
 export const insertReview = async (req, res) => {
@@ -37,7 +38,7 @@ export const insertReview = async (req, res) => {
 
 export const getReviewList = async (req, res) => {
   const {
-    params: { key },
+    params: { key, page },
   } = req;
 
   try {
@@ -45,14 +46,22 @@ export const getReviewList = async (req, res) => {
     if (key === 'recent') {
       reviews = await Review.find({})
         .populate('user')
-        .sort({ createdAt: 'desc' });
+        .sort({ createdAt: 'desc' })
+        .limit(page * 5);
     } else {
-      reviews = await Review.find({}).populate('user').sort({ views: 'desc' });
+      reviews = await Review.find({})
+        .populate('user')
+        .sort({ views: 'desc' })
+        .limit(page * 5);
     }
+
+    const cnt = await Review.find({}).countDocuments();
+    // console.log(cnt);
 
     // console.log(reviews);
     return res.status(200).json({
       reviews,
+      full: reviews.length === cnt ? 'true' : 'false',
     });
   } catch (error) {
     console.log(error);
@@ -185,6 +194,46 @@ export const dislikeReview = async (req, res) => {
     req.user.save();
     return res.status(200).json({
       likeReview: req.user.likeReview,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReviewPaging = async (req, res) => {
+  const {
+    body: { key, len, id, page },
+  } = req;
+
+  console.log(req.body);
+
+  const start = (page - 1) * 5;
+  let end = page * 5;
+  if (page * 5 > len) {
+    end = len;
+  }
+
+  let reviews = [];
+  try {
+    // 1. 1페이지 (첫 클릭) 2. 페이지 번호 클릭
+    if (key === 'wrote') {
+      if (start === 0) {
+        reviews = await Review.find({ user: id })
+          .sort({ createdAt: 'desc' })
+          .limit(5);
+      } else {
+        reviews = await Review.find({ user: id })
+          .sort({ createdAt: 'desc' })
+          .skip(start)
+          .limit(5);
+      }
+    } else {
+      const user = await User.findOne({ _id: id }).populate('likeReview');
+      reviews = user.likeReview.slice(start, end);
+    }
+
+    return res.status(200).json({
+      reviews,
     });
   } catch (error) {
     console.log(error);

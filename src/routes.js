@@ -13,7 +13,7 @@ const CHECK_PASSWORD = '/checkPassword';
 
 // review
 const REVIEWS = '/api/reviews';
-const LIST = '/:key/list';
+const LIST = '/:key/list/:page';
 const UPLOAD = '/upload';
 const REVIEW_DETAIL = '/:id';
 const EDIT_REVIEW = '/edit-review';
@@ -21,6 +21,7 @@ const DELETE_REVIEW = '/:id/delete';
 const MOVIE_REVIEW_LIST = '/movie/:id';
 const LIKE_REVIEW = '/:id/like-review';
 const DISLIKE_REVIEW = '/:id/dislike-review';
+const REVIEW_PAGING = '/reviewPaging';
 
 // user
 const USERS = '/api/users';
@@ -73,6 +74,7 @@ const routes = {
   movieReviewList: MOVIE_REVIEW_LIST,
   likeReview: LIKE_REVIEW,
   dislikeReview: DISLIKE_REVIEW,
+  reviewPaging: REVIEW_PAGING,
   comments: COMMENTS,
   reviewComments: REVIEW_COMMENTS,
   deleteComment: DELETE_COMMENT,

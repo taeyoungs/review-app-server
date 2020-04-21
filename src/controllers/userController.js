@@ -29,10 +29,21 @@ export const getUserDetail = async (req, res) => {
   } = req;
 
   try {
-    const user = await User.findById(id).populate('reviewList');
+    const user = await User.findById(id);
+    const recent = await Review.find({ user: id })
+      .sort({ createdAt: 'desc' })
+      .limit(3);
+    const best = await Review.find({ user: id })
+      .sort({ views: 'desc' })
+      .limit(3);
+
+    // const query = User.where({ email: result.email });
+    // await query.findOne(async (err, user) => {
     if (user) {
       return res.status(200).json({
         user,
+        recent,
+        best,
       });
     } else {
       return res.status(404).json({
@@ -74,6 +85,8 @@ export const editUserThumbnail = async (req, res) => {
     body: { id },
     file,
   } = req;
+
+  console.log(file);
 
   // s3에 먼저 이미지가 정상적으로 올라가는지부터 확인
   try {

@@ -8,6 +8,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.6",
     "@babel/node": "^7.8.4",
+    "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.8.6",
     "aws-sdk": "^2.656.0",
     "axios": "^0.19.2",
@@ -35,6 +36,11 @@
     "passport-naver": "^1.0.6"
   },
   "scripts": {
-    "server": "nodemon --exec babel-node src/init.js --delay 2"
+    "dev:server": "nodemon --exec babel-node src/init.js --delay 2",
+    "build:server": "babel src --out-dir build",
+    "build": "yarn run build:server",
+    "prebuild": "rd /s /q build",
+    "start": "node build/init.js",
+    "prestart": "yarn build"
   }
 }

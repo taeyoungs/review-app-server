@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 import passportLocalMongoose from 'passport-local-mongoose';
-import { generateToken } from '../lib/token';
 
 const hash = (password) => {
   console.log(password);
@@ -64,35 +63,6 @@ User.statics.findByEmailOrUsername = function ({ username, email }) {
     $or: [{ 'profile.username': username }, { email }],
   }).exec();
 };
-
-// User.statics.localRegister = ({ username, email, password }) => {
-//   console.log(hash(password));
-//   const user = new this({
-//     profile: {
-//       username,
-//     },
-//     email,
-//     password: hash(password),
-//   });
-
-//   return user.save();
-// };
-
-// User.methods.validatePassword = password => {
-//   const hashed = hash(password);
-
-//   return this.password === hashed;
-// };
-
-// User.methods.generateToken = function() {
-//   // jwt에 담을 내용
-//   const payload = {
-//     _id: this._id,
-//     profile: this.profile,
-//   };
-
-//   return generateToken(payload, 'user');
-// };
 
 User.plugin(passportLocalMongoose, { usernameField: 'email' });
 

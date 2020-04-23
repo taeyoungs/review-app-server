@@ -39,7 +39,7 @@
     "dev:server": "nodemon --exec babel-node src/init.js --delay 2",
     "build:server": "babel src --out-dir build",
     "build": "yarn run build:server",
-    "prebuild": "rd /s /q build",
+    "prebuild": "rm -rf build",
     "start": "node build/init.js",
     "prestart": "yarn build"
   }

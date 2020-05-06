@@ -6,8 +6,7 @@ https://www.youngs-review.shop
 
 Frontend Project : [review-app-client][clientlink]
 
-[clientlink]: https://github.com/taeyoungs/review-app-server "client project"
-
+[clientlink]: https://github.com/taeyoungs/review-app-client 'client project'
 
 ## Project Stack
 

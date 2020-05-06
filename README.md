@@ -1,30 +1,20 @@
-# review-app-server
+# Movie Review App - server
 
-Show current movies and reviews - server side
+> 로그인 후 특정 영화에 대해 리뷰 그리고 리뷰에 대한 댓글을 남길 수 있는 사이트
 
-## MERN
+https://www.youngs-review.shop
 
-1. mongodb
-2. express
-3. node
-4. react (client side)
+Frontend Project : [review-app-client][clientlink]
 
-## ToDos
+[clientlink]: https://github.com/taeyoungs/review-app-server "client project"
 
-- [ ] connect mongodb (use mongoose)
-- [ ] check client side
-- [ ] review api
-- [ ] user api
 
-## review
+## Project Stack
 
-- [ ] write review
-- [ ] delete review
-- [ ] update review
+### Server
 
-## user
-
-- [ ] sign in
-- [ ] sign up
-- [ ] social login
-- [ ] update profile image
+1. Node.js
+2. Express
+3. AWS EC2
+4. AWS S3
+5. MongoDB Atlas

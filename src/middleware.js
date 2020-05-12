@@ -35,3 +35,9 @@ export const deleteThumbnail = (req, res, next) => {
     next();
   }
 };
+
+export const testMiddleware = (req, res, next) => {
+  console.log(req);
+
+  next();
+};

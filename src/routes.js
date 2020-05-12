@@ -17,7 +17,7 @@ const LIST = '/:key/list/:page';
 const UPLOAD = '/upload';
 const REVIEW_DETAIL = '/:id';
 const EDIT_REVIEW = '/edit-review';
-const DELETE_REVIEW = '/:id/delete';
+const DELETE_REVIEW = '/:id';
 const MOVIE_REVIEW_LIST = '/movie/:id';
 const LIKE_REVIEW = '/:id/like-review';
 const DISLIKE_REVIEW = '/:id/dislike-review';
@@ -35,7 +35,7 @@ const DROPOUT_USER = '/dropOut/:id';
 const COMMENTS = '/api/comments';
 const CREATE_COMMENT = '/create';
 const REVIEW_COMMENTS = '/:id';
-const DELETE_COMMENT = '/delete';
+const DELETE_COMMENT = '/:reviewId/:commentId';
 const UPDATE_COMMENT = '/update';
 
 const API = '/api';

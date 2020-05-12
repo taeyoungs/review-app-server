@@ -202,15 +202,13 @@ export const dislikeReview = async (req, res) => {
 
 export const getReviewPaging = async (req, res) => {
   const {
-    body: { key, len, id, page },
+    query: { key, len, id, page },
   } = req;
 
-  console.log(req.body);
-
-  const start = (page - 1) * 5;
-  let end = page * 5;
-  if (page * 5 > len) {
-    end = len;
+  const start = (parseInt(page) - 1) * 5;
+  let end = parseInt(page) * 5;
+  if (parseInt(page) * 5 > parseInt(len)) {
+    end = parseInt(len);
   }
 
   let reviews = [];

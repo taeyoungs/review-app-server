@@ -17,20 +17,20 @@ const reviewRouter = express.Router();
 // insert, delete, update
 reviewRouter.post(routes.upload, insertReview);
 
+reviewRouter.get(routes.reviewPaging, getReviewPaging);
+
 reviewRouter.get(routes.list, getReviewList);
 
 reviewRouter.get(routes.reviewDetail, getReview);
 
-reviewRouter.get(routes.deleteReview, deleteReview);
+reviewRouter.delete(routes.deleteReview, deleteReview);
 
 reviewRouter.get(routes.movieReviewList, getMovieReviewList);
 
-reviewRouter.post(routes.editReview, editReview);
+reviewRouter.put(routes.editReview, editReview);
 
-reviewRouter.post(routes.likeReview, likeReview);
+reviewRouter.put(routes.likeReview, likeReview);
 
-reviewRouter.post(routes.dislikeReview, dislikeReview);
-
-reviewRouter.post(routes.reviewPaging, getReviewPaging);
+reviewRouter.put(routes.dislikeReview, dislikeReview);
 
 export default reviewRouter;

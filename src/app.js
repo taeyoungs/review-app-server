@@ -25,6 +25,9 @@ const app = express();
 
 const CookieStore = MongoStore(session);
 
+const LOCAL_ORIGIN = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+const AWS_ORIGIN = ['https://youngs-review.shop'];
+
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -33,8 +36,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-    methods: ['GET', 'POST'],
+    origin: AWS_ORIGIN,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
   }),
 );
 // app.use(function(req, res, next) {

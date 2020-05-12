@@ -12,10 +12,10 @@ const commentRouter = express.Router();
 // create, update, delete, getComments
 commentRouter.post(routes.createComment, createComment);
 
-commentRouter.post(routes.updateComment, updateComment);
+commentRouter.put(routes.updateComment, updateComment);
+
+commentRouter.delete(routes.deleteComment, deleteComment);
 
 commentRouter.get(routes.reviewComments, getReviewComments);
-
-commentRouter.post(routes.deleteComment, deleteComment);
 
 export default commentRouter;

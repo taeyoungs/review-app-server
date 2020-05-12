@@ -12,11 +12,11 @@ import { uploadUserThumbnail, deleteThumbnail } from '../middleware';
 
 const userRouter = express.Router();
 
-userRouter.post(routes.changePassword, changePassword);
+userRouter.put(routes.changePassword, changePassword);
 
 userRouter.get(routes.userDetail, getUserDetail);
 
-userRouter.post(routes.editProfile, editUserProfile);
+userRouter.put(routes.editProfile, editUserProfile);
 
 userRouter.post(
   routes.uploadThumbnail,
@@ -25,7 +25,7 @@ userRouter.post(
   editUserThumbnail,
 );
 
-userRouter.get(routes.dropOutUser, dropOutUser);
+userRouter.delete(routes.dropOutUser, dropOutUser);
 
 // userRouter.post(routes.uploadThumbnail, testThumbnail);
 

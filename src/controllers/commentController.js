@@ -29,8 +29,10 @@ export const createComment = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
   const {
-    body: { reviewId, commentId },
+    params: { reviewId, commentId },
   } = req;
+
+  console.log(req.body);
 
   try {
     await Comment.findByIdAndDelete(commentId);
@@ -53,6 +55,8 @@ export const updateComment = async (req, res) => {
   const {
     body: { id, content },
   } = req;
+
+  console.log(req.body);
 
   try {
     await Comment.findByIdAndUpdate(id, {
